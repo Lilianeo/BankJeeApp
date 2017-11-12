@@ -26,6 +26,15 @@ public class TransfertMB {
     private long sourceId;
     private long destinationId;
     private int montantTransfert;
+    private String trsMsg;
+
+    public void setTrsMsg(String trsMsg) {
+        this.trsMsg = trsMsg;
+    }
+
+    public String getTrsMsg() {
+        return trsMsg;
+    }
 
     /**
      * Creates a new instance of TransfertMB
@@ -77,7 +86,7 @@ public class TransfertMB {
             FacesContext.getCurrentInstance().addMessage("transfert:destination", facesMsg);
             ok = false;
         }
-        if (sourceId == destinationId){
+        if (sourceId == destinationId) {
             String msg = "Le compte destination doit etre different de la source";
             FacesMessage facesMsg
                     = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
@@ -96,6 +105,9 @@ public class TransfertMB {
             }
         }
         if (ok) {
+            trsMsg = "Vous avez transferé une somme de " + montantTransfert + " Dh, de " + compteSource.getNom()
+                    + " à " + compteDestination.getNom();
+
             gestionnaireDeCompteBancaire.transferer(compteSource, compteDestination,
                     montantTransfert);
         }
