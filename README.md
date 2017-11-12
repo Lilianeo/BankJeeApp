@@ -7,3 +7,6 @@ Dans le cadre du tp 4 du développement j2ee, on a crée cette application, qui 
 * Lazyloading : ... description
 * Item 2
 * ...
+
+## Capture d'ecran
+![gestionComptes](https://github.com/marouaneml/BankJeeApp/blob/master/captures/gestionComptes.PNG)
