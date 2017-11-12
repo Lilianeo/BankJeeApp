@@ -77,6 +77,13 @@ public class TransfertMB {
             FacesContext.getCurrentInstance().addMessage("transfert:destination", facesMsg);
             ok = false;
         }
+        if (sourceId == destinationId){
+            String msg = "Le compte destination doit etre different de la source";
+            FacesMessage facesMsg
+                    = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
+            FacesContext.getCurrentInstance().addMessage("transfert:destination", facesMsg);
+            ok = false;
+        }
         if (compteSource != null) {
             double soldeCompteSource = compteSource.getSolde();
             if (soldeCompteSource < montantTransfert) {
