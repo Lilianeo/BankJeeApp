@@ -60,8 +60,7 @@ public class GestionnaireDeCompteBancaire {
         return em.merge(c);
     }
 
-    public void transferer(CompteBancaire source, CompteBancaire destination,
-            int montant) {
+    public void transferer(CompteBancaire source, CompteBancaire destination, int montant) {
         int val = source.retirer(montant);
         if (val == 0) {
             return;
