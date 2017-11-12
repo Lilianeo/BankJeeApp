@@ -1,14 +1,53 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./mainTemplate.xhtml">
+                template="./mainTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="title">
-        title
+        Faire un transfert d'argent
     </ui:define>
 
     <ui:define name="content">
-        content
+        <h2 class="display-4">Transfert d'argent</h2>
+        <hr/>
+        <h:form id="transfert">
+            <div class="form-group row">
+                <label for="source" class="col-sm-2 col-form-label">N# du compte source</label>
+                <div class="col-sm-10">
+                    <h:inputText class="form-control" id="source" value="#{transfertMB.sourceId}" 
+                                 size="20" required="true">
+                        <f:convertNumber />
+                    </h:inputText>
+                    <h:message for="source" style="color:red" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="destination" class="col-sm-2 col-form-label">N# de destination</label>
+                <div class="col-sm-10">
+                    <h:inputText class="form-control" id="destination" value="#{transfertMB.destinationId}" 
+                                 size="20" required="true">
+                        <f:convertNumber />
+                    </h:inputText>
+                    <h:message for="destination" style="color:red" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="montant" class="col-sm-2 col-form-label">Montant du transfert</label>
+                <div class="col-sm-10">
+                    <h:inputText class="form-control" id="montant" value="#{transfertMB.montant}" 
+                                 size="20" required="true">
+                        <f:convertNumber />
+                    </h:inputText>
+                    <h:message for="montant" style="color:red" />
+                </div>
+            </div>
+            
+
+            <h:commandButton class="btn btn-primary" action="#{transfertMB.transferer()}" 
+                             value="Transferer"/>
+        </h:form>
     </ui:define>
 
 </ui:composition>

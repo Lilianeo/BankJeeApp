@@ -1,14 +1,72 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        <h1>Opérations bancaires du compte #{compteMB.idCompte}</h1>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./mainTemplate.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="title">
+        Detail du compte
+    </ui:define>
+    <f:metadata>
+        <f:event type="preRenderView" 
+                 listener="#{compteMB.chargeCompte}"/>
+        <f:viewParam name="idCompte" value="#{compteMB.idCompte}"/>
+    </f:metadata>
+    <ui:define name="content">
+        <h2 class="display-4">Détails compte N##{compteMB.idCompte} , de #{compteMB.compteBancaire.nom}</h2>
         <hr/>
-        
-    </h:body>
-</html>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">N:      #{compteMB.compteBancaire.id}</li>
+                        <li class="list-group-item">Nom:     #{compteMB.compteBancaire.nom}</li>
+                        <li class="list-group-item">Solde:   #{compteMB.compteBancaire.solde}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                
+            </div>
+        </div>
+
+        <br/>
+        <p class="lead" style="font-size: 2.25rem;">
+            Opérations bancaires
+        </p>
+        <hr/>
+        <f:view>
+            <h:form>
+                <p:dataTable 
+                    value="#{compteMB.operationsDuCompte}" 
+                    var="item">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Description"/>
+                        </f:facet>
+                        <h:outputText value="#{item.description}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Montant"/>
+                        </f:facet>
+                        <h:outputText value="#{item.montant}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Date Opération"/>
+                        </f:facet>
+                        <h:outputText value="#{item.dateOperation}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </f:view>
+    </ui:define>
+</ui:composition>
+
 

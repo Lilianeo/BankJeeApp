@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./mainTemplate.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <f:metadata>
+        <f:viewParam name="idCompte" value="#{ajoutRetraitMB.idCompte}"/>
+        <f:event type="preRenderView"
+                 listener="#{ajoutRetraitMB.chargeClient}"/>
+    </f:metadata>
+
+    <ui:define name="title">
+        ajout / Retrait
+    </ui:define>
+
+    <ui:define name="content">
+        <h2 class="display-4">Ajout / Retrait [ #{ajoutRetraitMB.compte.nom} ]</h2>
+        <hr/>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">N:      #{ajoutRetraitMB.compte.id}</li>
+                        <li class="list-group-item">Nom:     #{ajoutRetraitMB.compte.nom}</li>
+                        <li class="list-group-item">Solde:   #{ajoutRetraitMB.compte.solde}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <p class="lead" style="font-size: 2.25rem;">
+                    Effectuer un dépôt ou un retrait sur ce compte
+                </p>
+                <hr/>
+                <f:view>
+                    <h:form id="operation">
+                        <h:selectOneRadio id="ajout-retrait" 
+                                          value="#{ajoutRetraitMB.typeOperation}"
+                                          required="true"
+                                          class=""
+                                          requiredMessage="Vous devez dire si c'est un ajout ou un retrait">
+                            <f:selectItem itemLabel="Deposer une somme" itemValue="depot" class="form-check-input"/>
+                            <f:selectItem itemLabel="Retirer une somme" itemValue="retrait"/>
+                        </h:selectOneRadio>
+                        <h:message id="message-ajout-retrait" for="ajout-retrait"
+                                   errorStyle="color:red"/>
+
+                        <div class="form-group row">
+                            <label for="montant" class="col-sm-2 col-form-label">Montant</label>
+                            <div class="col-sm-10">
+                                <h:inputText class="form-control" id="montant" value="#{ajoutRetraitMB.montant}" 
+                                             required="true">
+                                </h:inputText>
+                                <h:message id="message-montant" for="montant" errorStyle="color:red" />
+                            </div>
+
+                        </div>
+
+                        <h:commandButton value="Lancer l'opération"
+                                         action="#{ajoutRetraitMB.operation}">
+                        </h:commandButton>
+                    </h:form>
+                </f:view>
+            </div>
+        </div>
+        <br/>
+
+
+    </ui:define>
+
+</ui:composition>

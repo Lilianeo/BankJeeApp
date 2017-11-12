@@ -6,12 +6,17 @@
 package tp4;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -24,7 +29,9 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "CompteBancaire.count",
             query = "SELECT COUNT(c.id) FROM CompteBancaire c"),
     @NamedQuery(name = "CompteBancaire.findById",
-            query = "SELECT c FROM CompteBancaire c WHERE c.id = :id")
+            query = "SELECT c FROM CompteBancaire c WHERE c.id = :id"),
+    @NamedQuery(name = "CompteBancaire.findOperationsByIdCompte",
+            query = "SELECT o FROM CompteBancaire c join c.operations o WHERE c.id = :idCompte")
 })
 public class CompteBancaire implements Serializable {
 
@@ -33,10 +40,15 @@ public class CompteBancaire implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Collection<OperationBancaire> operations = new ArrayList<>();
+
     private String nom;
     private int solde;
 
     public CompteBancaire() {
+        nom = "";
+        solde = 0;
     }
 
     public CompteBancaire(String nom, int solde) {

@@ -4,13 +4,25 @@
                 template="./mainTemplate.xhtml"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="title">
         Liste de comptes
     </ui:define>
 
     <ui:define name="content">
+        <h2 class="display-4">Liste des comptes</h2>
+        <hr/>
+        <c:if test="#{empty compteMB.comptes}">
+            <div class="alert alert-warning"> La banque est vide, Création des comptes de test
+                <h:form>
+                    <h:commandButton class="btn btn-info" value="Créer les comptes de test" 
+                                     action="#{compteMB.creeComptesTest()}"/>
+                </h:form>
+            </div>
+        </c:if>
+
         <f:view>
             <h:form>
                 <p:dataTable value="#{compteMB.comptes}" 
@@ -39,15 +51,18 @@
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Détails des opérations"/>
+                            <h:outputText value="Gestion du compte"/>
                         </f:facet>
                         <h:commandLink action="#{compteMB.showDetails(item.id)}"
                                        value="Détails"/>
-                        <ui:remove>
-                            <h:link outcome="detailCompte">
-                                <f:param name="idCompte" value="#{item.id}"/>
-                            </h:link>
-                        </ui:remove>
+                        &nbsp;
+                        <h:link value="Ajout/retrait"
+                                outcome="ajoutRetrait">
+                            <f:param name="idCompte" value="#{item.id}"/>
+                        </h:link>
+                        &nbsp;
+                        <h:commandLink action="#{compteMB.supprimerCompte(item)}"
+                                       value="Supprimer"/>
                     </p:column>
                 </p:dataTable>
             </h:form>

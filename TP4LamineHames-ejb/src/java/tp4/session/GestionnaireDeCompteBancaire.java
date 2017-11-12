@@ -10,7 +10,9 @@ import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import tp4.CompteBancaire;
+import tp4.OperationBancaire;
 
 /**
  *
@@ -37,4 +39,34 @@ public class GestionnaireDeCompteBancaire {
         creerCompte(new CompteBancaire("Ringo Starr", 20000));
         creerCompte(new CompteBancaire("Georges Harrisson", 100000));
     }
+
+    public void deleteCompte(CompteBancaire c) {
+        em.remove(em.merge(c));
+    }
+
+    public CompteBancaire findById(long id) {
+        return (CompteBancaire) em.find(CompteBancaire.class, id);
+    }
+
+    public List<OperationBancaire> findOperationsDuCompte(long idCompte) {
+        Query query = em.createNamedQuery("CompteBancaire.findOperationsByIdCompte");
+        query.setParameter("idCompte", idCompte);
+        return (List<OperationBancaire>) query.getResultList();
+    }
+
+    public CompteBancaire update(CompteBancaire c) {
+        return em.merge(c);
+    }
+
+    public void transferer(CompteBancaire source, CompteBancaire destination,
+            int montant) {
+        int val = source.retirer(montant);
+        if (val == 0) {
+            return;
+        }
+        destination.deposer(montant);
+        update(source);
+        update(destination);
+    }
+
 }

@@ -1,14 +1,40 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./mainTemplate.xhtml">
+                template="./mainTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="title">
-        title
+        Nouveau compte
     </ui:define>
 
     <ui:define name="content">
-        content
+        <h2 class="display-4">Nouveau compte</h2>
+        <hr/>
+        <h:form id="nouveauCompte">
+            <div class="form-group row">
+                <label for="nom" class="col-sm-2 col-form-label">Nom</label>
+                <div class="col-sm-10">
+                    <h:inputText class="form-control" id="nom" value="#{nouveauCompteMB.nom}" 
+                                 required="true">
+                    </h:inputText>
+                    <h:message for="nom" style="color:red" />
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label for="solde" class="col-sm-2 col-form-label">Solde</label>
+                <div class="col-sm-10">
+                    <h:inputText class="form-control" id="solde" value="#{nouveauCompteMB.solde}" 
+                                 required="true">
+                        <f:convertNumber />
+                    </h:inputText>
+                </div>
+            </div>
+            <h:commandButton class="btn btn-primary" action="#{nouveauCompteMB.creerCompte()}" 
+                             value="Creer le compte"/>
+        </h:form>
     </ui:define>
 
 </ui:composition>
