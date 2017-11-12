@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp4;
+package tp4.beans;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import tp4.CompteBancaire;
 import tp4.session.GestionnaireDeCompteBancaire;
 
 @ManagedBean
