@@ -6,11 +6,13 @@
 package tp4.session;
 
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.primefaces.model.SortOrder;
 import tp4.CompteBancaire;
 import tp4.OperationBancaire;
 
@@ -69,4 +71,17 @@ public class GestionnaireDeCompteBancaire {
         update(destination);
     }
 
+    public List<CompteBancaire> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+        return (List<CompteBancaire>) em.createNamedQuery("CompteBancaire.findAll")
+                .setFirstResult(first)
+                .setMaxResults(pageSize)
+                .getResultList();
+
+    }
+
+    public int count(String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+        return ((Long) em.createNamedQuery("CompteBancaire.count")
+                .getSingleResult()).intValue();
+
+    }
 }
